@@ -27,31 +27,30 @@ A backend system for managing financial records with role-based access control, 
 ## Project Structure
 
 ```
-├── server.js                     # Entry point, middleware setup, error handling
+├── server.js                       # Entry point, middleware setup, error handling
 ├── src/
 │   ├── config/
-│   │   └── db.js                 # MongoDB connection
+│   │   └── db.js                   # MongoDB connection
 │   ├── controllers/
-│   │   ├── authController.js     # Register, login, get profile
-│   │   ├── userController.js     # User management (admin)
-│   │   ├── recordController.js   # Financial records CRUD + filters
+│   │   ├── authController.js       # Register, login, get profile
+│   │   ├── userController.js       # User management (admin)
+│   │   ├── recordController.js     # Financial records CRUD + filters
 │   │   └── dashboardController.js  # Aggregations & analytics
 │   ├── middleware/
-│   │   ├── auth.js               # JWT verification
-│   │   ├── roleCheck.js          # Role-based access control
-│   │   └── validate.js           # Validation error handler
+│   │   ├── auth.js                 # JWT verification
+│   │   ├── roleCheck.js            # Role-based access control
+│   │   └── validate.js             # Validation error handler
 │   ├── models/
-│   │   ├── User.js               # User schema + password hashing
-│   │   └── Record.js             # Financial record schema
+│   │   ├── User.js                 # User schema + password hashing
+│   │   └── Record.js               # Financial record schema
 │   ├── routes/
-│   │   ├── authRoutes.js         # Auth endpoints
-│   │   ├── userRoutes.js         # User management endpoints
-│   │   ├── recordRoutes.js       # Record CRUD endpoints
-│   │   └── dashboardRoutes.js    # Dashboard analytics endpoints
+│   │   ├── authRoutes.js           # Auth endpoints
+│   │   ├── userRoutes.js           # User management endpoints
+│   │   ├── recordRoutes.js         # Record CRUD endpoints
+│   │   └── dashboardRoutes.js      # Dashboard analytics endpoints
 │   └── utils/
-│       ├── ApiError.js           # Custom error class with status codes
-│       └── seed.js               # Database seeder script
-├── .env.example
+│       ├── ApiError.js             # Custom error class with status codes
+│       └── seed.js                 # Database seeder script
 ├── .gitignore
 ├── package.json
 └── README.md
@@ -62,15 +61,15 @@ A backend system for managing financial records with role-based access control, 
 ### Prerequisites
 
 - Node.js (v16 or above)
-- MongoDB (running locally or use a MongoDB Atlas URI)
+- MongoDB (running locally or a MongoDB Atlas URI)
 
 ### Steps
 
 1. **Clone the repository**
 
 ```bash
-git clone <repo-url>
-cd finance-backend
+git clone https://github.com/Abhishekyadav1807/Zorvynassignment.git
+cd Zorvynassignment
 ```
 
 2. **Install dependencies**
@@ -79,13 +78,9 @@ cd finance-backend
 npm install
 ```
 
-3. **Set up environment variables**
+3. **Configure environment variables**
 
-Copy `.env.example` to `.env` and update the values:
-
-```bash
-cp .env.example .env
-```
+Create a `.env` file in the root directory with the following variables:
 
 ```
 PORT=5000
@@ -93,13 +88,15 @@ MONGO_URI=mongodb://localhost:27017/finance_db
 JWT_SECRET=your_jwt_secret_here
 ```
 
+Replace `MONGO_URI` with your MongoDB connection string and set a strong `JWT_SECRET`.
+
 4. **Seed the database** (optional – creates test users and sample records)
 
 ```bash
 node src/utils/seed.js
 ```
 
-This will create 3 test users (one per role) and 30 sample financial records.
+This creates 3 test users (one per role) and 30 sample financial records.
 
 5. **Start the server**
 
@@ -228,7 +225,7 @@ curl http://localhost:5000/api/dashboard/summary \
 
 ## Assumptions & Design Decisions
 
-1. **Soft Delete** – Records are soft-deleted (`isDeleted: true`) rather than permanently removed. This keeps data for audit/reporting purposes and ensures dashboard analytics remain consistent.
+1. **Soft Delete** – Records are soft-deleted (`isDeleted: true`) rather than permanently removed. This keeps data for audit purposes and ensures dashboard analytics stay consistent.
 
 2. **Default Role** – New users get the `viewer` role by default. Only an admin can promote users to `analyst` or `admin`.
 
@@ -236,9 +233,9 @@ curl http://localhost:5000/api/dashboard/summary \
 
 4. **Token Expiry** – JWT tokens are valid for 7 days. After that, users need to log in again.
 
-5. **Inactive Users** – Deactivated users cannot log in or access any API endpoint, but their data (and records they created) is preserved in the database.
+5. **Inactive Users** – Deactivated users cannot log in or access any API endpoint, but their data is preserved in the database.
 
-6. **Dashboard Access** – All authenticated users, including viewers, can access dashboard summary endpoints since these return aggregate read-only data — not individual records.
+6. **Dashboard Access** – All authenticated users including viewers can access dashboard summary endpoints since these return aggregate read-only data, not individual records.
 
 7. **Self-Protection** – Admins cannot change their own role or deactivate their own account to prevent accidental lockout.
 
