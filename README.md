@@ -2,6 +2,10 @@
 
 A backend system for managing financial records with role-based access control, built using **Node.js**, **Express**, and **MongoDB**.
 
+**Live API**: [https://zorvynassignment-pt5j.onrender.com](https://zorvynassignment-pt5j.onrender.com)
+
+> Note: The API is hosted on Render free tier. If it has been idle, the first request may take ~30 seconds to wake up.
+
 ---
 
 ## Features
@@ -185,7 +189,7 @@ Server runs at `http://localhost:5000`
 ### Register a new user
 
 ```bash
-curl -X POST http://localhost:5000/api/auth/register \
+curl -X POST https://zorvynassignment-pt5j.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name": "John", "email": "john@test.com", "password": "pass123"}'
 ```
@@ -193,7 +197,7 @@ curl -X POST http://localhost:5000/api/auth/register \
 ### Login
 
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST https://zorvynassignment-pt5j.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "admin@example.com", "password": "password123"}'
 ```
@@ -201,7 +205,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 ### Create a financial record (Admin)
 
 ```bash
-curl -X POST http://localhost:5000/api/records \
+curl -X POST https://zorvynassignment-pt5j.onrender.com/api/records \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <token>" \
   -d '{"amount": 5000, "type": "income", "category": "Freelance", "description": "Website project"}'
@@ -210,14 +214,14 @@ curl -X POST http://localhost:5000/api/records \
 ### Get records with filters
 
 ```bash
-curl "http://localhost:5000/api/records?type=expense&category=food&page=1&limit=10" \
+curl "https://zorvynassignment-pt5j.onrender.com/api/records?type=expense&category=food&page=1&limit=10" \
   -H "Authorization: Bearer <token>"
 ```
 
 ### Get dashboard summary
 
 ```bash
-curl http://localhost:5000/api/dashboard/summary \
+curl https://zorvynassignment-pt5j.onrender.com/api/dashboard/summary \
   -H "Authorization: Bearer <token>"
 ```
 
